@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+.vs/
+.idea/
+*.suo
+*.user
+*.log
+Thumbs.db
+.DS_Store

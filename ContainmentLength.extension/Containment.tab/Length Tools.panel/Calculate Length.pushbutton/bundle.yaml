@@ -1,0 +1,17 @@
+title: "Calculate\nLength"
+tooltip: >-
+  Calculate total route length of selected conduits, cable trays, and fittings.
+  
+  Includes horizontal and vertical breakdown for cable Voltage Drop (VD) 
+  and Short Circuit (SC) calculations.
+  
+  HOW TO USE:
+  1. Select conduits, cable trays, and/or fittings in the model
+  2. Click this button
+  3. Connected fittings are auto-detected
+  4. View the length breakdown in the results window
+  
+  Results can be copied to clipboard for use in calculations.
+author: Containment Length Calculator Plugin
+highlight: new
+context: selection

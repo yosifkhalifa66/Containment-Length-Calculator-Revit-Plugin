@@ -1,0 +1,13 @@
+{
+    "type": "extension",
+    "builtin": "False",
+    "default_enabled": "True",
+    "name": "ContainmentLength",
+    "description": "Calculate total route length of conduits and cable trays (including fittings) for cable VD and SC calculations.",
+    "author": "Containment Length Calculator Plugin",
+    "author_profile": "",
+    "url": "",
+    "website": "",
+    "image": "",
+    "assembly": ""
+}
