@@ -68,10 +68,25 @@ CAT_NAMES = {
 # Helpers
 # =============================================================================
 
+def get_id_value(elem_or_id):
+    """Safely get integer value of an ElementId across Revit 2020-2023 and 2024+ (Int64)."""
+    if elem_or_id is None:
+        return None
+    eid = getattr(elem_or_id, "Id", elem_or_id)
+    if hasattr(eid, "Value"):
+        return eid.Value
+    if hasattr(eid, "IntegerValue"):
+        return eid.IntegerValue
+    try:
+        return int(eid.ToString())
+    except Exception:
+        return None
+
+
 def _cat_id(element):
     """Return integer category id, or None."""
     if element and element.Category:
-        return element.Category.Id.IntegerValue
+        return get_id_value(element.Category.Id)
     return None
 
 
@@ -193,14 +208,14 @@ def compute_element_length(element):
 
 def find_connected_fittings(elements, doc):
     """Walk the connector graph to discover fittings bridging selected runs."""
-    known_ids = set(e.Id.IntegerValue for e in elements)
+    known_ids = set(get_id_value(e) for e in elements)
     found = []  # fittings not originally in selection
     queue = list(elements)
     visited = set()
 
     while queue:
         elem = queue.pop(0)
-        eid = elem.Id.IntegerValue
+        eid = get_id_value(elem)
         if eid in visited:
             continue
         visited.add(eid)
@@ -214,7 +229,7 @@ def find_connected_fittings(elements, doc):
                 continue
             for ref_conn in refs:
                 owner = ref_conn.Owner
-                oid = owner.Id.IntegerValue
+                oid = get_id_value(owner)
                 if oid in known_ids or oid in visited:
                     continue
                 if is_fitting(owner):
@@ -551,7 +566,7 @@ def main():
     seen = set()
     unique = []
     for elem in selected + auto_fittings:
-        eid = elem.Id.IntegerValue
+        eid = get_id_value(elem)
         if eid not in seen:
             seen.add(eid)
             unique.append(elem)
